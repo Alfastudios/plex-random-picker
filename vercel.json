@@ -1,0 +1,13 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "client/dist",
+  "env": {
+    "VITE_PLEX_URL": "@vite_plex_url",
+    "VITE_PLEX_TOKEN": "@vite_plex_token"
+  },
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
