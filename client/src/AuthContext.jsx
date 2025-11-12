@@ -14,8 +14,15 @@ export function AuthProvider({ children }) {
     const savedUser = localStorage.getItem('authUser')
 
     if (savedToken && savedUser) {
-      setToken(savedToken)
-      setUser(JSON.parse(savedUser))
+      try {
+        const parsedUser = JSON.parse(savedUser)
+        setToken(savedToken)
+        setUser(parsedUser)
+      } catch (err) {
+        console.error('Error parsing saved user:', err)
+        localStorage.removeItem('authToken')
+        localStorage.removeItem('authUser')
+      }
     }
 
     setLoading(false)
