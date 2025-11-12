@@ -146,8 +146,8 @@ app.get('/api/library/:key/all', async (req, res) => {
         rating: parseFloat(attributes.rating) || 0,
         contentRating: attributes.contentRating,
         duration: parseInt(attributes.duration) || 0,
-        thumb: attributes.thumb ? `${PLEX_URL}${attributes.thumb}?X-Plex-Token=${PLEX_TOKEN}` : null,
-        art: attributes.art ? `${PLEX_URL}${attributes.art}?X-Plex-Token=${PLEX_TOKEN}` : null,
+        thumb: attributes.thumb ? `/api/image?path=${encodeURIComponent(attributes.thumb)}` : null,
+        art: attributes.art ? `/api/image?path=${encodeURIComponent(attributes.art)}` : null,
         type: attributes.type, // movie or show
         genres: video.Genre?.map(g => g.$.tag) || [],
         addedAt: attributes.addedAt,
@@ -189,8 +189,8 @@ app.post('/api/random', async (req, res) => {
         rating: parseFloat(attributes.rating) || 0,
         contentRating: attributes.contentRating,
         duration: parseInt(attributes.duration) || 0,
-        thumb: attributes.thumb ? `${PLEX_URL}${attributes.thumb}?X-Plex-Token=${PLEX_TOKEN}` : null,
-        art: attributes.art ? `${PLEX_URL}${attributes.art}?X-Plex-Token=${PLEX_TOKEN}` : null,
+        thumb: attributes.thumb ? `/api/image?path=${encodeURIComponent(attributes.thumb)}` : null,
+        art: attributes.art ? `/api/image?path=${encodeURIComponent(attributes.art)}` : null,
         type: attributes.type,
         genres: video.Genre?.map(g => g.$.tag) || [],
         addedAt: attributes.addedAt,
@@ -343,6 +343,46 @@ app.post('/api/user/history', verifyToken, async (req, res) => {
 });
 
 // ============ FIN FAVORITOS E HISTORIAL ============
+
+// ============ IMAGE PROXY ============
+
+// Proxy for images from Plex
+app.get('/api/image', async (req, res) => {
+  try {
+    const imagePath = req.query.path;
+
+    if (!imagePath) {
+      return res.status(400).json({ error: 'Image path is required' });
+    }
+
+    const imageUrl = `${PLEX_URL}${imagePath}?X-Plex-Token=${PLEX_TOKEN}`;
+
+    const response = await axios.get(imageUrl, {
+      responseType: 'arraybuffer',
+      timeout: 5000
+    });
+
+    // Set cache headers to reduce repeated requests
+    res.set('Content-Type', response.headers['content-type'] || 'image/jpeg');
+    res.set('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
+    res.send(response.data);
+  } catch (error) {
+    console.error('Error proxying image:', error.message);
+    // Return a 1x1 transparent PNG as fallback
+    const transparentPng = Buffer.from([
+      0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
+      0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1f, 0x15, 0xc4,
+      0x89, 0x00, 0x00, 0x00, 0x0a, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9c, 0x63, 0x00, 0x01, 0x00, 0x00,
+      0x05, 0x00, 0x01, 0x0d, 0x0a, 0x2d, 0xb4, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae,
+      0x42, 0x60, 0x82
+    ]);
+    res.set('Content-Type', 'image/png');
+    res.set('Cache-Control', 'no-cache');
+    res.send(transparentPng);
+  }
+});
+
+// ============ FIN IMAGE PROXY ============
 
 // Catch all for SPA routing
 app.get('*', (req, res) => {

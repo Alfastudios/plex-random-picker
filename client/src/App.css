@@ -703,9 +703,14 @@ header p {
   cursor: pointer;
 }
 
+/* Tablet breakpoint */
 @media (max-width: 768px) {
   header h1 {
     font-size: 2rem;
+  }
+
+  header p {
+    font-size: 1rem;
   }
 
   .filters {
@@ -716,8 +721,22 @@ header p {
     flex-direction: column;
   }
 
+  .btn-primary,
+  .btn-secondary {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+
   .results {
     grid-template-columns: 1fr;
+  }
+
+  .card-image-container {
+    height: 350px;
+  }
+
+  .card img {
+    height: 350px;
   }
 
   .modal-content {
@@ -732,8 +751,233 @@ header p {
     height: 300px;
   }
 
+  .modal-info {
+    padding: 20px;
+  }
+
   .modal-actions {
     flex-direction: column;
+  }
+
+  .modal-actions button,
+  .modal-actions a {
+    width: 100%;
+  }
+}
+
+/* Mobile phone breakpoint */
+@media (max-width: 480px) {
+  .app {
+    padding: 10px;
+  }
+
+  header {
+    min-height: 200px;
+    padding: 40px 15px;
+    margin-bottom: 20px;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  header p {
+    font-size: 0.9rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .user-menu {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .user-name {
+    font-size: 0.85rem;
+  }
+
+  .change-type-btn {
+    padding: 6px 10px;
+    font-size: 1rem;
+  }
+
+  .logout-btn {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .tabs {
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .tabs button {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .filters {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .filter-group label {
+    font-size: 0.8rem;
+  }
+
+  .filter-group input,
+  .filter-group select {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .actions {
+    gap: 10px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .results {
+    gap: 15px;
+  }
+
+  .card {
+    border-radius: 8px;
+  }
+
+  .card-image-container {
+    height: 250px;
+  }
+
+  .card img {
+    height: 250px;
+  }
+
+  .card-content {
+    padding: 12px;
+  }
+
+  .card-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  .year {
+    font-size: 0.8rem;
+  }
+
+  .genres {
+    font-size: 0.75rem;
+  }
+
+  .summary {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .card-actions {
+    gap: 5px;
+  }
+
+  .card-actions button {
+    padding: 8px;
+    font-size: 0.75rem;
+  }
+
+  .watched-checkbox {
+    margin: 10px 0;
+    padding: 8px;
+  }
+
+  .watched-checkbox label {
+    font-size: 0.8rem;
+  }
+
+  .watched-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Modal styles for mobile */
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .modal-content {
+    border-radius: 12px;
+    max-height: 95vh;
+  }
+
+  .modal-close {
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .modal-poster {
+    height: 250px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .modal-info {
+    padding: 15px;
+  }
+
+  .modal-info h2 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+
+  .modal-year {
+    font-size: 1rem;
+  }
+
+  .modal-rating {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .rating-badge {
+    padding: 6px 12px;
+    font-size: 0.95rem;
+  }
+
+  .modal-genres {
+    gap: 6px;
+  }
+
+  .genre-tag {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+  }
+
+  .modal-summary {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+  }
+
+  .btn-imdb {
+    padding: 12px 20px;
+    font-size: 1rem;
   }
 
   .modal-actions button,

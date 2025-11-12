@@ -145,3 +145,59 @@
     font-size: 1.3rem;
   }
 }
+
+@media (max-width: 480px) {
+  .content-type-selector {
+    padding: 15px;
+  }
+
+  .selector-container {
+    width: 100%;
+  }
+
+  .selector-header {
+    margin-bottom: 30px;
+  }
+
+  .selector-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+
+  .selector-header p {
+    font-size: 0.95rem;
+  }
+
+  .selector-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 25px;
+  }
+
+  .content-type-card {
+    padding: 20px 16px;
+  }
+
+  .content-type-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .card-description {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+  }
+
+  .selected-badge {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+
+  .hint {
+    font-size: 0.8rem;
+  }
+}
