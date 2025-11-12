@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: plex-random-picker
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && cd client && npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: VITE_PLEX_URL
+        value: http://192.168.1.88:32400
+      - key: VITE_PLEX_TOKEN
+        value: o-CQNS6jTNt-3uihuSey
+      - key: JWT_SECRET
+        value: tu-super-secreto-cambiar-en-produccion
+      - key: NODE_ENV
+        value: production
