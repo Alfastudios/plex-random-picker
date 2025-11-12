@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './RouletteSpinner.css'
 
-export function RouletteSpinner({ isSpinning, movies, onSpinComplete, onAddFavorite }) {
+export function RouletteSpinner({ isSpinning, movies, onSpinComplete, onAddFavorite, onClickCard }) {
   const [displayedMovie, setDisplayedMovie] = useState(movies[0] || null)
   const [spinProgress, setSpinProgress] = useState(0)
 
@@ -44,7 +44,7 @@ export function RouletteSpinner({ isSpinning, movies, onSpinComplete, onAddFavor
   return (
     <div className={`roulette-overlay ${isSpinning ? 'spinning' : ''}`}>
       <div className="roulette-container">
-        <div className="roulette-frame">
+        <div className="roulette-frame" onClick={() => !isSpinning && displayedMovie && onClickCard && onClickCard(displayedMovie)} style={{ cursor: !isSpinning && displayedMovie ? 'pointer' : 'default' }}>
           {displayedMovie ? (
             <>
               <div className="movie-image">

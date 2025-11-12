@@ -349,17 +349,22 @@ app.post('/api/user/history', verifyToken, async (req, res) => {
 // Proxy for images from Plex
 app.get('/api/image', async (req, res) => {
   try {
-    const imagePath = req.query.path;
+    let imagePath = req.query.path;
 
     if (!imagePath) {
       return res.status(400).json({ error: 'Image path is required' });
     }
 
+    // Decode the path in case it's URL-encoded
+    imagePath = decodeURIComponent(imagePath);
+
     const imageUrl = `${PLEX_URL}${imagePath}?X-Plex-Token=${PLEX_TOKEN}`;
+
+    console.log(`Proxying image from: ${imageUrl}`);
 
     const response = await axios.get(imageUrl, {
       responseType: 'arraybuffer',
-      timeout: 5000
+      timeout: 10000
     });
 
     // Set cache headers to reduce repeated requests
@@ -368,17 +373,7 @@ app.get('/api/image', async (req, res) => {
     res.send(response.data);
   } catch (error) {
     console.error('Error proxying image:', error.message);
-    // Return a 1x1 transparent PNG as fallback
-    const transparentPng = Buffer.from([
-      0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
-      0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1f, 0x15, 0xc4,
-      0x89, 0x00, 0x00, 0x00, 0x0a, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9c, 0x63, 0x00, 0x01, 0x00, 0x00,
-      0x05, 0x00, 0x01, 0x0d, 0x0a, 0x2d, 0xb4, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae,
-      0x42, 0x60, 0x82
-    ]);
-    res.set('Content-Type', 'image/png');
-    res.set('Cache-Control', 'no-cache');
-    res.send(transparentPng);
+    res.status(500).json({ error: 'Failed to load image' });
   }
 });
 

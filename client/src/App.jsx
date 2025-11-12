@@ -253,6 +253,8 @@ function App() {
     setIsRouletteSpinning(false)
     // Aquí puedes hacer lo que quieras con la película ganadora
     addToHistory(movie)
+    // Abrir el modal con la película ganadora
+    setSelectedItem(movie)
     // Reset roulette state after a delay to allow viewing the result
     setTimeout(() => {
       setRouletteMovies([])
@@ -557,6 +559,7 @@ function App() {
           movies={rouletteMovies}
           onSpinComplete={handleRouletteComplete}
           onAddFavorite={addToFavorites}
+          onClickCard={setSelectedItem}
         />
       )}
     </div>
